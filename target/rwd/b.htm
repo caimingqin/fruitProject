@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>好丽友客户服务平台</title>
+<link rel="stylesheet" href="rs/css/20110607.css" type="text/css"/>
+<script type="text/javascript" src="static/js/jquery-1.6.min.js"></script>
+<script type="text/javascript">
+
+
+    //设置cookies
+    function dologin() {
+    try {
+
+				Save();
+         }catch(e){
+		 				alert(JSON.stringify(e));
+         }
+		 
+    }
+
+	function Save() {											
+        var url = "http://localhost:8080/" +"qiefou/commandHandler.shtml";	
+        var datas={};
+       
+        datas.name="閲囪喘";//ACC中文名称
+        datas.code ="12345";//ACC中文名称
+        datas.addr ="厦门";//Acc区分
+        
+            var postData = {
+									"commandName":"UserCommand",
+								  "contents":JSON.stringify(datas)
+						};	
+						alert(JSON.stringify(datas));
+						
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: url,
+                contentType: "application/json",
+                data: JSON.stringify(postData),
+                success: function (data) {
+                try{ 
+                 if(data.contents.message==undefined){
+                    alert("保存成功");
+                    search_App();
+                  }else{
+                    alert(data.contents.message);
+                  }
+                }catch(err){
+                  alert("异常,请与维护人员联系");
+                } 
+             },
+                error: function () {
+                    //请求出错处理
+                    alert("保存失败！");
+                }
+            });
+    }
+	
+  
+</script>
+
+<style type="text/css"> 
+<!--
+.inpt{ 
+height:20px;
+width:200px;
+border:0; 
+border-right:0; 
+border-bottom:0; 
+padding-left:20px; 
+font-size: 14px; 
+BACKGROUND-COLOR: transparent;  
+font-family:"Times New Roman", Times, serif}
+-->
+</style>
+</head>
+<body>
+<!--隐藏控件-->
+<!---->
+<div class="easyui-layout" fit=true style="overflow:hidden; height:100%;">
+			<div region="north" border="false" style="overflow:hidden;" >
+			<input type="hidden" id="txtMtype" value="" />
+								<div style=" background-image: url(rs/img/top_bar_bg.png);  height: 37px;  position: relative; z-index: 1;">
+										<!-- ??? ?? -->
+										<div style="height: 37px;width: 249px; position: relative; float: left;"><img src="rs/img/top_logo.png" alt="Logo" width="249" height="37" /></div>
+										<!-- ?? ??? ?? ?? ?? -->
+										<div style="float: right; padding-right: 5px;">&nbsp;	</div>
+
+										<!-- ?? ??? ?? ?? -->
+										<div style="	height: 37px; width: 227px; position: relative; margin: 0 auto;"><img src="rs/img/top_bt_temp.png"   border="0"/></div>  
+										<!-- ?? ??? ?? ? -->
+								</div>
+			</div>
+<div region="center"  border="false"  style="overflow-y:hidden; background-image: url(rs/img/login_bg.png);	background-repeat: repeat-x;	background-position:top;">
+<CENTER>
+<div style="position: relative; width:831px;height:581px; background-image: url(rs/img/login_main.png);	margin-top:30px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td height="150"></td></tr>
+<tr><td height="300" valign="top" align="left">
+<!--登陆信息-->
+<div style="margin-top:27px; margin-left:270px;"><input class="inpt" type="text" id="txtuser" value="请输入用户名" /></div>
+<div id="divpsd" style="margin-top:17px; margin-left:270px;"><input class="inpt" type="text"  onfocus="changetype()" id="txtpsd" value="请输入密码" /></div>
+<div style="position:absolute; left: 520px; top: 200px;z-index:1;"><a href="#" onclick="dologin();">	<img src="rs/img/login_go.png"   border="0"/></a></div>
+<div style="margin-top:20px; margin-left:270px;">
+<span><input type="checkbox" id="ckbSave" />Save ID</span>
+<span style="margin-left:5px; width:60px;"><SELECT id="selFactory"  NAME="" ><option>OFC</option></SELECT></span>
+<a href="#" ><img src="rs/img/login_find.png" border="0" />Find ID/PASS</a> 
+</div>
+</td></tr>
+<tr><td height="20">
+		<div style="height: 20px;width: 100%;text-align: center;	vertical-align: middle;">
+			<img src="rs/img/copylight_login.png"  align="absmiddle" />
+		</div>
+</td></tr>
+</table>
+</div></CENTER>
+</div>	
+</div>
+			
+</body>
+</html>

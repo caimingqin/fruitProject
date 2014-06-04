@@ -1,0 +1,160 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com</groupId>
+  <artifactId>rwd</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>rwd Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+   <dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+
+		 <dependency> 
+		 <groupId>junit</groupId> 
+		 <artifactId>junit</artifactId> 
+			<version>4.1</version>
+			 <scope>test</scope> 
+			 </dependency> 
+		<!-- <dependency> <groupId>org.codehaus.jsr166-mirror</groupId> <artifactId>jsr166</artifactId> 
+			<version>1.7.0</version> </dependency> -->
+		<dependency>
+			<groupId>org.coconut.forkjoin</groupId>
+			<artifactId>jsr166y</artifactId>
+			<version>281207</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+
+<!-- 
+	<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+ -->
+		<!-- <dependency> <groupId>org.hsqldb</groupId> <artifactId>hsqldb</artifactId> 
+			<version>2.2.9</version> <scope>test</scope> </dependency> -->
+
+
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>compile</scope>
+		</dependency>
+		
+			<dependency>
+			<groupId>net.sourceforge.jtds</groupId>
+			<artifactId>jtds</artifactId>
+			<version>1.2.4</version>
+			<scope>test</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>3.1.0.RELEASE</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>3.1.0.RELEASE</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>3.1.0.RELEASE</version>
+			<scope>provided</scope>
+		</dependency>
+		
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>3.1.0.RELEASE</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>3.1.0.RELEASE</version>
+		</dependency>
+		<dependency>
+	<groupId>org.aspectj</groupId>
+	<artifactId>aspectjlib</artifactId>
+	<version>1.6.2</version>
+</dependency>
+
+<dependency>
+	<groupId>org.aspectj</groupId>
+	<artifactId>aspectjweaver</artifactId>
+	<version>1.8.0</version>
+</dependency>
+
+	<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>2.10.0</version>
+		</dependency>
+		
+  </dependencies>
+  <build>
+    <finalName>rwd</finalName>
+    <plugins>
+    
+   <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
+				<configuration>
+					<warSourceExcludes>WEB-INF/lib/*.jar</warSourceExcludes>
+					<packagingExcludes>
+					WEB-INF/lib/*.jar,
+						WEB-INF/classes/cmq/com/**,
+					</packagingExcludes>
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+					</archive>
+					<warName>qiefou</warName>
+				</configuration>
+			</plugin>
+			    <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.7.1</version>
+     <configuration>
+     <skip>true</skip>
+     </configuration>
+      </plugin>
+      
+    </plugins>
+  </build>
+</project>
