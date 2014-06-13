@@ -34,6 +34,7 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.1.1</version>
+
 		</dependency>
 
 		<!-- <dependency> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-databind</artifactId> 
@@ -139,10 +140,11 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.1.1</version>
 				<configuration>
-					<!-- <warSourceExcludes>WEB-INF/lib/*.jar</warSourceExcludes> -->
+					<warSourceExcludes>WEB-INF/lib/*.jar</warSourceExcludes>
 					<packagingExcludes>
 
 						WEB-INF/classes/cmq/com/**,
+						WEB-INF/lib/*.jar
 					</packagingExcludes>
 					<archive>
 						<addMavenDescriptor>false</addMavenDescriptor>

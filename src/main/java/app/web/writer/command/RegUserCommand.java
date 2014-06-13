@@ -5,6 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import app.domain.User;
+import app.util.mongodb.DomainModelQuery;
 import app.util.mongodb.MongodbManager;
 
 import com.mce.command.AbstractEventCommand;
@@ -30,6 +31,8 @@ public class RegUserCommand extends AbstractEventCommand {
 	
 	@Autowired
 	private MongodbManager manager;
+	@Autowired
+    private DomainModelQuery domainModelQuery;
 
 	@Override
 	public Object execute(DomainEventGather deg) {
@@ -43,7 +46,8 @@ public class RegUserCommand extends AbstractEventCommand {
 		if(!password.equalsIgnoreCase(cPassword)){
 			throw new CommandHandleException("密码不一致！");
 		}
-		User user = new User(logInName, phone, password, cPassword);
+		String userCode = domainModelQuery.nextCode(User.COL);
+		User user = new User(userCode,logInName, phone, password, cPassword);
 		deg.setDomainEvent(new DomainEvent(User.REG_EVENT,user));
 		return Command.SUCCESS;
 	}

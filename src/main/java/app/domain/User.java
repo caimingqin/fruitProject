@@ -8,7 +8,7 @@ public class User extends AbstractModel{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public static final String  COL="USER";
+	public static final String  COL="user";
 	public static final String KEY="name";
 	public static final String REG_EVENT="reguser";
 	public static final String UPDATE_EVENT="UpdateUser";
@@ -18,23 +18,19 @@ public class User extends AbstractModel{
     private String addr;
     private String password;
     private String cPassword;
-    
-    
-	public User(String name, String phone, String password, String cPassword) {
-		this(name, phone, phone, password, cPassword);
-	}
-	public User(String logInName, String phone, String addr,
-			String password, String cPassword) {
-		super();
-		this.name = logInName;
-		this.phone = phone;
-		this.addr = addr;
-		this.password = password;
-		this.cPassword = cPassword;
-	}
+	
 	public User() {
 		super();
 	}
+	public User(String userCode, String logInName, String phone2,
+			String password2, String cPassword2) {
+		this.code=userCode;
+		this.name=logInName;
+		this.phone=phone2;
+		this.password=password2;
+		this.cPassword=cPassword2;
+	}
+
 	public String getCode() {
 		return code;
 	}

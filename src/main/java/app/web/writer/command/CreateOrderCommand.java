@@ -2,8 +2,11 @@ package app.web.writer.command;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import app.domain.Order;
 import app.domain.OrderItem;
+import app.util.mongodb.DomainModelQuery;
 
 import com.mce.command.AbstractEventCommand;
 import com.mce.command.AutoCommand;
@@ -26,7 +29,8 @@ public class CreateOrderCommand extends AbstractEventCommand {
 	private String phone;
 	private String recipient; // 收件人
 	private String remark;
-
+	@Autowired
+    private DomainModelQuery domainModelQuery;
 	@Override
 	public Object execute(DomainEventGather deg) {
 		if (StringUtils.isNull(addr)) {
@@ -41,7 +45,8 @@ public class CreateOrderCommand extends AbstractEventCommand {
 		if (items.isEmpty()) {
 			throw new CommandHandleException("订单列表不能为空！");
 		}
-		Order order = new Order(addr, phone, recipient, remark, items);
+		String orderCode = domainModelQuery.nextCode(Order.COL);
+		Order order = new Order(orderCode,addr, phone, recipient, remark, items);
 		deg.setDomainEvent(new DomainEvent(Order.CREATE_EVENT, order));
 		return Command.SUCCESS;
 	}

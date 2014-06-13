@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import app.domain.Order;
 import app.domain.User;
 import app.util.mongodb.MongodbManager;
 
@@ -29,7 +30,8 @@ public class AppNotificationListener implements NotificationListener{
 				User u=(User) de.getTarget();
 				log.info("========>>>"+u.getName());
 				mongodbManager.save(User.COL, u);
-				
+			}else if(dName.equalsIgnoreCase(Order.CREATE_EVENT)||dName.equalsIgnoreCase(Order.CANCEL_EVENT)){
+				mongodbManager.save(Order.COL, de.getTarget());
 			}
 		}
 	}

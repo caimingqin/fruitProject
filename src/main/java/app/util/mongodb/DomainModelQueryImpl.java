@@ -12,6 +12,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import app.domain.Order;
+import app.domain.User;
+
 import com.mce.core.inject.Bean;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
@@ -22,9 +25,6 @@ import com.mongodb.DBObject;
 public class DomainModelQueryImpl implements DomainModelQuery {
 
 	private MongodbManager mongodbManager;
-//	private static String CODE_COUNTER_COLLETION = "CodeCounter";
-//	private Log logger = LogFactory.getLog(this.getClass().getName());
-
 	private Map<String,AtomicInteger> codeMapper = new ConcurrentHashMap<String,AtomicInteger>();
 	private String codeCollName = "codes";
 	private Log logger=LogFactory.getLog(this.getClass().getName());
@@ -39,12 +39,10 @@ public class DomainModelQueryImpl implements DomainModelQuery {
 	@Autowired
 	public void setDB(MongodbManager m) {
 		this.mongodbManager = m;
-		
 		initCodes();
 	}
 
 	private void initCodes() {
-		
 		synchronized(this){
 			DBCollection col = this.mongodbManager.getDBCollection(this.codeCollName);
 			DBCursor dc = col.find();
@@ -53,51 +51,32 @@ public class DomainModelQueryImpl implements DomainModelQuery {
 					DBObject dbo = dc.next();
 					String type = (String) dbo.get("type");
 					Integer i = (Integer)dbo.get("ins");
-//					Integer i = Integer.parseInt(ins);
 					codeMapper.put(type, new AtomicInteger(i));
 				}
 			}
 			else{
-//				DBObject dbo = getDBObject(User.COLLECTION_NAME,0);
-//				DBObject dbo2 = getDBObject(Customer.COLLECTION_NAME,0);
-//				DBObject dbo3 = getDBObject(SurveyRequest.COLLECTION_NAME,0);
-//				DBObject dbo4 = getDBObject(DocumentCategory.NAME,0);
-//				DBObject dbo5 = getDBObject(DocumentPage.NAME,0);
-//				DBObject dbo6 = getDBObject(SurveyReport.COLLECTION_NAME,0);
-//				DBObject db07 = getDBObject(Invoice.COLLECTION_NAME,0);
+				DBObject dbo = getDBObject(User.COL,0);
+				DBObject dbo2 = getDBObject(Order.COL,0);
+				col.save(dbo);
+				col.save(dbo2);
 				
-//				col.save(dbo);
-//				col.save(dbo2);
-//				col.save(dbo3);
-//				col.save(dbo4);
-//				col.save(dbo5);
-//				col.save(db07);
-//				col.save(dbo6);
-				
-//				codeMapper.put(User.COLLECTION_NAME, new AtomicInteger(1));
-//				codeMapper.put(Customer.COLLECTION_NAME, new AtomicInteger(1));
-//				codeMapper.put(SurveyRequest.COLLECTION_NAME, new AtomicInteger(1));
-//				codeMapper.put(DocumentCategory.NAME, new AtomicInteger(1));
-//				codeMapper.put(DocumentPage.NAME, new AtomicInteger(1));
-//				codeMapper.put(SurveyReport.COLLECTION_NAME, new AtomicInteger(1));
-//				codeMapper.put(Invoice.COLLECTION_NAME, new AtomicInteger(1));
-//				codeMapper.put(CustomerManager.COLLECTION_NAME, new AtomicInteger(1));
+				codeMapper.put(User.COL, new AtomicInteger(0));
+				codeMapper.put(Order.COL, new AtomicInteger(0));
 				
 			}
 		}
 		
 	}
 
-	private DBObject getDBObject(String simpleName, int i) {
-		DBObject dbo = new BasicDBObject("type",simpleName);
+	private DBObject getDBObject(String typeName, int i) {
+		DBObject dbo = new BasicDBObject("type",typeName);
 		dbo.put("ins", i);
-		dbo.put("_id", simpleName);
+		dbo.put("_id", typeName);
 		return dbo;
 	}
 
-	private NumberFormat formatter = new DecimalFormat("000000");
-	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
-	
+	private NumberFormat formatter = new DecimalFormat("0000");
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	
 	@Override
 	public String nextCode(String type){
@@ -115,23 +94,6 @@ public class DomainModelQueryImpl implements DomainModelQuery {
 		collection.save(dbObject);
 		return ss+str;
 	}
-
-//	public String nextCode() {
-//		AtomicInteger counter = null;
-//		DBCollection collection = mongodbManager.getDBCollection(CODE_COUNTER_COLLETION);
-//		DBObject dbObject = collection.findOne();
-//		if(dbObject==null){
-//			counter=new AtomicInteger(0);
-//			dbObject=new BasicDBObject();
-//			dbObject.put("code",counter.get()+"");
-//		}else{
-//			counter = new AtomicInteger(Integer.parseInt((String) dbObject.get("code")));;
-//		}
-//		String max =""+ counter.addAndGet(1);
-//		dbObject.put("code", max);
-//		collection.save(dbObject);
-//		return max;
-//	}
 
 
 }

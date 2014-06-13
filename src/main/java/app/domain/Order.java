@@ -12,7 +12,7 @@ public class Order extends AbstractModel {
 	private static final long serialVersionUID = 1L;
 	public static final String CANCEL_EVENT = "cancelOrder";
 	public static String KEY = "code";
-	public static String COL = "Order";
+	public static String COL = "order";
 	public static String CREATE_EVENT = "createOrder";
 	private String code;
 	private OrderState orderState = OrderState.NORMAL;
@@ -26,9 +26,10 @@ public class Order extends AbstractModel {
 	public Order() {
 	}
 
-	public Order(String addr, String phone, String recipient, String remark,
+	public Order(String code,String addr, String phone, String recipient, String remark,
 			List<OrderItem> items) {
 		super();
+		this.code=code;
 		this.addr = addr;
 		this.phone = phone;
 		this.recipient = recipient;
