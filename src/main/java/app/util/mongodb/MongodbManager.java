@@ -19,7 +19,7 @@ public interface MongodbManager {
 	List<DBObject> query(String colName, DBObject queryDBObject);
 
 	List<DBObject> query(String colName, DBObject queryDBObject, DBObject filterQueryDBObject);
-	 List<DBObject> query(String colName, DBObject queryDBObject, DBObject filterQueryDBObject,DBObject orderBy,int limit);
+	List<DBObject> query(String colName, DBObject queryDBObject, DBObject filterQueryDBObject,DBObject orderBy,int limit);
 
 	<T> T toClass(DBObject dbObject, Class<T> clazz);
 
@@ -34,5 +34,7 @@ public interface MongodbManager {
 	void remove(String colName, String key, String value);
 
 	DBObject findDBObject(String collectionName, BasicDBObject queryObject);
+
+	<T> T get(Class<T> clazz, String colName, String key, String value);
     
 }

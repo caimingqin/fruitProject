@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+    http://www.springframework.org/schema/aop 
+    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd 
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+   
+    <context:component-scan base-package="app.web.reader" />
+    <!--  
+    <context:component-scan base-package="com.orion.dms.interfaces.salesforecast.web" />
+    <context:component-scan base-package="com.orion.dms.interfaces.stock.web" />
+    <context:component-scan base-package="com.orion.dms.interfaces.order.web" />
+    <context:component-scan base-package="com.orion.dms.interfaces.distributor.web" />
+    -->
+    <aop:aspectj-autoproxy proxy-target-class="false" />
+    <context:annotation-config />
+	<mvc:annotation-driven/>
+ <!--  
+ 	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.orion.common.interfaces.web.interceptor.spring.RedisSpringUserInterceptor">
+				<property name="appId" value="A2011120800000001"/>
+			</bean>
+		
+			<bean class="com.orion.common.interfaces.web.interceptor.spring.SpringUserInterceptor">
+				<property name="appId" value="A2011120800000001"/>
+			</bean>
+			
+		</mvc:interceptor>
+	</mvc:interceptors>
+-->
+	<bean id="beanProvideAdaptor"  class="com.mce.core.inject.servlet.ServletBeanInjectorAdaptor"/>
+    <bean id="defaultAnnotationHandlerMapping" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
+    <bean id="annotationMethodHandlerAdapter"  class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" >
+        <property name="messageConverters">
+            <list>
+                <!-- convert JSON to Java POJO-->
+                <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+                <bean class="org.springframework.http.converter.FormHttpMessageConverter"/>
+                <bean class="org.springframework.http.converter.BufferedImageHttpMessageConverter"/>
+                <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+                <bean class="org.springframework.http.converter.ResourceHttpMessageConverter"/>
+            </list>
+        </property>
+    </bean>    
+
+    <bean
+        class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+         <property name="defaultContentType" value="application/json" />
+        <property name="mediaTypes">
+            <map>
+                <entry key="html" value="text/html" />
+                <entry key="json" value="application/json" />
+                <entry key="xml" value="application/xml" />
+            </map>
+        </property>
+        <property name="viewResolvers">
+            <list>
+                <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                    <property name="viewClass"
+                        value="org.springframework.web.servlet.view.JstlView" />
+                    <property name="prefix" value="/WEB-INF/jsp/" />
+                    <property name="suffix" value=".jsp" />
+                </bean>
+            </list>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <!-- output JSON-->
+                <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>
+            </list>
+        </property>
+    </bean>
+</beans>

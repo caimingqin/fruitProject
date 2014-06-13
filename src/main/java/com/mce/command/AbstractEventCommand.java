@@ -24,7 +24,7 @@ import com.mce.domain.event.DomainEvent;
      return obs;
    }
  
-   public abstract Object execute(DomainEventGather paramDomainEventGather);
+   public abstract Object execute(DomainEventGather deg);
  
    protected void preDestory()
    {

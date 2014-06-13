@@ -1,10 +1,11 @@
  package com.mce.command;
  
  import java.util.HashMap;
- import java.util.List;
- import java.util.Map;
- import org.apache.commons.logging.Log;
- import org.apache.commons.logging.LogFactory;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
  
  public abstract class AbstractCommand
    implements Command
@@ -12,7 +13,7 @@
    private static final long serialVersionUID = 5444677509816224889L;
    private boolean inited = false;
    private List<UploadFile> uploadFiles;
-   private Map<String, String> contextParams = new HashMap();
+   private Map<String, String> contextParams = new HashMap<String, String>();
    private Log logger = LogFactory.getLog(getClass().getName());
  
    public void init(List<UploadFile> uFiles)

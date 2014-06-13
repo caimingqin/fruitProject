@@ -25,11 +25,10 @@ public class AppNotificationListener implements NotificationListener{
 		if(DomainEvent.isDomainEventNotification(notificationName)){
 			DomainEvent de=(DomainEvent) n.getBody();
 			String dName = de.getName();
-			if(dName.equalsIgnoreCase("SaveUser")){
+			if(dName.equalsIgnoreCase(User.REG_EVENT)||dName.equalsIgnoreCase(User.UPDATE_EVENT)){
 				User u=(User) de.getTarget();
-				log.info("========>>>"+u.getCode());
-				log.info("mongodbManager========>>>"+mongodbManager);
-				mongodbManager.save("User", u);
+				log.info("========>>>"+u.getName());
+				mongodbManager.save(User.COL, u);
 				
 			}
 		}

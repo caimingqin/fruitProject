@@ -23,10 +23,12 @@ import com.mongodb.util.JSON;
 @Bean(name = "mongodbManager")
 public class MongodbManagerImpl implements MongodbManager {
 
-	private static final Log logger = LogFactory.getLog(MongodbManagerImpl.class.getName());
+	private static final Log logger = LogFactory
+			.getLog(MongodbManagerImpl.class.getName());
 	private static Mongo mongo = null;
 	private static DB MONGO_DB = null;
 	private static final String MONGODB_NAME = "webdb";
+
 	private static final String HOST = "127.0.0.1";
 	private static final BasicDBObject FILTER_ID = new BasicDBObject("_id", 0);
 	static {
@@ -39,6 +41,8 @@ public class MongodbManagerImpl implements MongodbManager {
 			logger.info("create  Mongo Exception " + e.getMessage());
 		}
 	}
+
+
 
 	@Override
 	public DB getDB() {
@@ -56,21 +60,24 @@ public class MongodbManagerImpl implements MongodbManager {
 	}
 
 	@Override
-	public List<DBObject> query(String colName, DBObject queryDBObject, DBObject filterQueryDBObject) {
+	public List<DBObject> query(String colName, DBObject queryDBObject,
+			DBObject filterQueryDBObject) {
 		DBCollection dbCollection = this.getDBCollection(colName);
 		if (filterQueryDBObject == null) {
 			filterQueryDBObject = FILTER_ID;
 		} else {
 			filterQueryDBObject.put("_id", 0);
 		}
-		DBCursor dbCursor = dbCollection.find(queryDBObject, filterQueryDBObject).limit(1000);
+		DBCursor dbCursor = dbCollection.find(queryDBObject,
+				filterQueryDBObject).limit(1000);
 		List<DBObject> array = dbCursor.toArray();
 		dbCursor.close();
 		return array;
 	}
 
 	@Override
-	public List<DBObject> query(String colName, DBObject queryDBObject, DBObject filterQueryDBObject, DBObject orderBy, int limit) {
+	public List<DBObject> query(String colName, DBObject queryDBObject,
+			DBObject filterQueryDBObject, DBObject orderBy, int limit) {
 		DBCollection dbCollection = this.getDBCollection(colName);
 		if (queryDBObject == null) {
 			queryDBObject = new BasicDBObject();
@@ -80,7 +87,8 @@ public class MongodbManagerImpl implements MongodbManager {
 		} else {
 			filterQueryDBObject.put("_id", 0);
 		}
-		DBCursor dbCursor = dbCollection.find(queryDBObject, filterQueryDBObject);
+		DBCursor dbCursor = dbCollection.find(queryDBObject,
+				filterQueryDBObject);
 		if (orderBy != null) {
 			dbCursor.sort(orderBy);
 		}
@@ -100,6 +108,12 @@ public class MongodbManagerImpl implements MongodbManager {
 		BasicDBObject fields = new BasicDBObject();
 		fields.put("_id", 0);
 		return collection.findOne(basicDBObject, fields);
+	}
+
+	@Override
+	public <T> T get(Class<T> clazz, String colName, String key, String value) {
+		DBObject dbObject = findDBObject(colName, key, value);
+		return toClass(dbObject, clazz);
 	}
 
 	@Override
@@ -127,7 +141,8 @@ public class MongodbManagerImpl implements MongodbManager {
 		if (filter != null) {
 			return this.getDBCollection(colName).findOne(query, filter);
 		}
-		return this.getDBCollection(colName).findOne(query, MongodbManagerImpl.FILTER_ID);
+		return this.getDBCollection(colName).findOne(query,
+				MongodbManagerImpl.FILTER_ID);
 	}
 
 	@Override
@@ -167,7 +182,8 @@ public class MongodbManagerImpl implements MongodbManager {
 	}
 
 	@Override
-	public DBObject findDBObject(String collectionName, BasicDBObject queryObject) {
+	public DBObject findDBObject(String collectionName,
+			BasicDBObject queryObject) {
 		return findDBObject(collectionName, queryObject, null);
 	}
 
