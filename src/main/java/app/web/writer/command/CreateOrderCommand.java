@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import app.domain.Order;
 import app.domain.OrderItem;
+import app.domain.User;
 import app.util.mongodb.DomainModelQuery;
 
 import com.mce.command.AbstractEventCommand;
@@ -13,6 +14,7 @@ import com.mce.command.AutoCommand;
 import com.mce.command.Command;
 import com.mce.command.CommandHandleException;
 import com.mce.command.DomainEventGather;
+import com.mce.core.UserSession;
 import com.mce.domain.event.DomainEvent;
 import com.mce.util.StringUtils;
 
@@ -29,6 +31,7 @@ public class CreateOrderCommand extends AbstractEventCommand {
 	private String phone;
 	private String recipient; // 收件人
 	private String remark;
+    private String deliveryTime;
 	@Autowired
     private DomainModelQuery domainModelQuery;
 	@Override
@@ -42,11 +45,16 @@ public class CreateOrderCommand extends AbstractEventCommand {
 		if (StringUtils.isNull(recipient)) {
 			throw new CommandHandleException("收货人不能为空");
 		}
+		if (StringUtils.isNull(deliveryTime)) {
+			throw new CommandHandleException("请选择送货时间");
+		}
 		if (items.isEmpty()) {
 			throw new CommandHandleException("订单列表不能为空！");
 		}
+		User creater = (User) UserSession.instance().get(User.class.getName());
 		String orderCode = domainModelQuery.nextCode(Order.COL);
-		Order order = new Order(orderCode,addr, phone, recipient, remark, items);
+		Order order = new Order(creater,orderCode,addr, phone, recipient, remark, items,deliveryTime);
+		
 		deg.setDomainEvent(new DomainEvent(Order.CREATE_EVENT, order));
 		return Command.SUCCESS;
 	}
@@ -69,6 +77,10 @@ public class CreateOrderCommand extends AbstractEventCommand {
 
 	public String getRemark() {
 		return remark;
+	}
+
+	public String getDeliveryTime() {
+		return deliveryTime;
 	}
 
 }

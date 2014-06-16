@@ -6,9 +6,9 @@
 <script type="text/javascript" src="static/js/jquery-1.6.min.js"></script>
 <script type="text/javascript" src="static/js/common.js"></script>
 <script type="text/javascript">
-	function regUser() {											
+		function regUser() {											
         var datas={};
-        datas.logInName="采购";
+        datas.logInName="cmd";
 		datas.password="123";
 		datas.cPassword="123";
 		datas.phone="13859692703";
@@ -18,13 +18,14 @@
 	function createOrder(){
 	
 	    var datas={};
-        datas.addr="采购";
-		datas.phone="123";
-		datas.recipient="123";
-		datas.remark="13859692703";
+        datas.addr="诚意学院3号楼3077";
+		datas.phone="13859692703";
+		datas.recipient="cmd";
+		datas.remark="多放些西瓜";
+		datas.deliveryTime="尽快派送";
 		var items=[];
 		var item={};
-		item.productCode="P1111";
+		item.productCode="A00010";
 		item.quantity="2";
 		items.push(item);
 		datas.items=items;
@@ -33,6 +34,13 @@
 	}
 	
 	function cancelOrder(){
+	    var datas={};
+        datas.orderCode="201406140002";
+        command("CancelOrderCommand",datas);
+	
+	}
+	
+	function doLogin(){
 	    var datas={};
         datas.orderCode="20140613001";
         command("CancelOrderCommand",datas);
@@ -44,7 +52,8 @@
 <body>
 <div style="background-color:red;"><a href="#" onclick="regUser();">regUser()</a></div>
 <div style="background-color:red;"><a href="#" onclick="createOrder();">createOrder()</a></div>
-<div style="background-color:red;"><a href="#" onclick="cancelOrder();">cancelOrder()</a></div>
+<div style="background-color:red;"><a href="#" onclick="cancelOrder();">cancelOrder()</a></div>\
+<div><a href="#" onclick="doLogin();">doLogin()</a></div>
 			
 </body>
 </html>

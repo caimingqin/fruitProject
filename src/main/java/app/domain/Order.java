@@ -16,33 +16,42 @@ public class Order extends AbstractModel {
 	public static String CREATE_EVENT = "createOrder";
 	private String code;
 	private OrderState orderState = OrderState.NORMAL;
-	private User creater;
+	private String creater;
+	private String createrCode;
 	private String addr;
 	private String phone;
 	private String recipient; // 收件人
 	private String remark;
 	private List<OrderItem> items;
-
+    private String deliveryTime;
+	
 	public Order() {
 	}
 
-	public Order(String code,String addr, String phone, String recipient, String remark,
-			List<OrderItem> items) {
+	public Order(User user,String code,String addr, String phone, String recipient, String remark,
+			List<OrderItem> items,String deliveryTime) {
 		super();
+		this.createrCode=user.getCode();
+		this.creater=user.getName();
 		this.code=code;
 		this.addr = addr;
 		this.phone = phone;
 		this.recipient = recipient;
 		this.remark = remark;
 		this.items = items;
+		this.deliveryTime=deliveryTime;
 	}
 
 	public String getCode() {
 		return code;
 	}
 
-	public User getCreater() {
+	public String getCreater() {
 		return creater;
+	}
+
+	public String getCreaterCode() {
+		return createrCode;
 	}
 
 	public String getAddr() {
@@ -67,6 +76,10 @@ public class Order extends AbstractModel {
 
 	public OrderState getOrderState() {
 		return orderState;
+	}
+
+	public String getDeliveryTime() {
+		return deliveryTime;
 	}
 
 	public static class OrderState {

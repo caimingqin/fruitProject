@@ -11,6 +11,7 @@
 
 <!--  start app context -->
 
+ <bean id="userInterceptor" class="app.web.writer.command.interceptor.UserInterceptor"/>
 <!-- 
 	<bean id="ufi" class="com.orion.common.interfaces.web.interceptor.RedisUserCommandInterceptor"/>
 	

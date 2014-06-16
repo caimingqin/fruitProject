@@ -8,6 +8,7 @@ public class User extends AbstractModel{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public static final String SESSION_ID = "client-id";
 	public static final String  COL="user";
 	public static final String KEY="name";
 	public static final String REG_EVENT="reguser";
@@ -18,7 +19,7 @@ public class User extends AbstractModel{
     private String addr;
     private String password;
     private String cPassword;
-	
+	private String sessionId;
 	public User() {
 		super();
 	}
@@ -50,9 +51,16 @@ public class User extends AbstractModel{
 		return cPassword;
 	}
     
+	public String getSessionId() {
+		return sessionId;
+	}
 	public void update(String password,String phone,String addr ){
 		this.password=password;
 		this.phone=phone;
 		this.addr=addr;
+	}
+	public void login(String sessionId2) {
+		this.sessionId=sessionId2;
+		
 	}
 }

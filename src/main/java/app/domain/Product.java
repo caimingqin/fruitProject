@@ -1,7 +1,6 @@
 package app.domain;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import com.mce.domain.model.AbstractModel;
 
@@ -14,9 +13,27 @@ public class Product extends AbstractModel{
 	private String code;
 	private String title;
 	private String description;
-	private List<Price> prices;
+	private BigDecimal price;
 	private BigDecimal weight;//净含量 规格
-//	private String htmlContent;
+	private String imageUrl;
+	public String getCode() {
+		return code;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public BigDecimal getPrice() {
+		return price;
+	}
+	public BigDecimal getWeight() {
+		return weight;
+	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
 	
 	
 }

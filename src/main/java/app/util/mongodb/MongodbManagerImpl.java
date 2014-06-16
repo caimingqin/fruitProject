@@ -3,6 +3,7 @@ package app.util.mongodb;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -185,6 +186,25 @@ public class MongodbManagerImpl implements MongodbManager {
 	public DBObject findDBObject(String collectionName,
 			BasicDBObject queryObject) {
 		return findDBObject(collectionName, queryObject, null);
+	}
+
+	@Override
+	public List<DBObject> likeQuery(String collectionName,String likeKey,
+			String likeStr) {
+		
+		DBObject queryDBObject = new BasicDBObject();
+		DBObject reg = getLikeQueryDBObject(likeStr);
+		queryDBObject.put(likeKey, reg);
+		return query(collectionName, queryDBObject);
+	}
+	
+
+	@Override
+	public DBObject getLikeQueryDBObject(String likeStr) {
+		Pattern pattern = Pattern.compile( "^.*"+likeStr+".*$", Pattern.CASE_INSENSITIVE);
+		DBObject reg = new BasicDBObject();
+		reg.put("$regex", pattern);
+		return reg;
 	}
 
 }

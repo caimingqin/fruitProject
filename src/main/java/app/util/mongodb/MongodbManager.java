@@ -36,5 +36,10 @@ public interface MongodbManager {
 	DBObject findDBObject(String collectionName, BasicDBObject queryObject);
 
 	<T> T get(Class<T> clazz, String colName, String key, String value);
+
+	List<DBObject> likeQuery(String collectionName, String likeKey,
+			String likeStr);
+
+	DBObject getLikeQueryDBObject(String likeStr);
     
 }

@@ -5,11 +5,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.List;
+import java.util.regex.Pattern;
 
 import org.junit.Test;
 
+import app.domain.Order;
 import app.domain.User;
 import app.util.mongodb.MongodbManagerImpl;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 
 public class UtilsTest {
 
@@ -24,6 +30,18 @@ public class UtilsTest {
 	public void testDrop() {
 		MongodbManagerImpl mongodbManagerImpl = new MongodbManagerImpl();
 		mongodbManagerImpl.drop("User");
+	}
+	@Test
+	public void testLike() {
+		MongodbManagerImpl mongodbManagerImpl = new MongodbManagerImpl();
+		mongodbManagerImpl.drop("User");
+		BasicDBObject queryDBObject = new BasicDBObject();
+		Pattern pattern = Pattern.compile( "^.*"+"20140614"+".*$", Pattern.CASE_INSENSITIVE);
+		BasicDBObject reg = new BasicDBObject();
+		reg.put("$regex", pattern);
+		queryDBObject.put("code", reg);
+		List<DBObject> query = mongodbManagerImpl.query(Order.COL, queryDBObject);
+		System.out.println(query);
 	}
 
 //	@Test
